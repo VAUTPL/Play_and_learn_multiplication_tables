@@ -9,18 +9,18 @@ Rodrigo Barba lrbarba@utpl.edu.ec
 
 Edison Chavez eechavez2@utpl.edu.ec
 Roddy Yaguana rsyaguana@utpl.edu.ec
+
 Document
-
 Play_and_learn_multiplication_tables
+
 Illustrative Video
-
 Play_and_learn_multiplication_tables
-System Requirements
 
+System Requirements
 2 GB or more RAM
 Windows 7 or later (has only been tested on 10), OS X 10.8 or later, Linux 3.0+
-Installation
 
+Installation
 First, one should install the following libraries:
 
 OpenCV version 2.8.10+
