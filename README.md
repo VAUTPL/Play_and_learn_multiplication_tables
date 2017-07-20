@@ -14,11 +14,11 @@ Juego didáctico de aprender a multiplicar para niños entre 5 y 7 años
 
 ### Document 
 
-* [Juego Didactio para niños]()
+* [Juego Didactio para niños](https://www.dropbox.com/s/d2izr197gam0ldm/vision_multipliergame%20%282%29.pdf?dl=0)
 
 ### Illustrative Video 
 
-* [Play and Learn multiplication tables]()
+* [Play and Learn multiplication tables](https://www.youtube.com/watch?v=n46VPyPh7s8)
 
 ### System Requirements
 
