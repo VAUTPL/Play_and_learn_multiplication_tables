@@ -1,5 +1,13 @@
 # -*- coding: utf-8 -*-
+#_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-#
+# PROJECT   : Play and learn multiplication tables                                                                     #                                                                                                     #
+# AUTHOR    : Edison Chavez                     eechavez2@utpl.edu.ec                                                  #
+#             Roddy Yaguana                     rsyaguana@utpl.edu.ec                                                  #                                                                     #
+# PROFESSOR : Rodrigo Barba                     lrbarba@utpl.edu.ec                                                    #
+# DATE      : 20/07/2017                                                                                               #
+#_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-#
 
+#librerias
 import argparse
 import os
 import sys
@@ -11,9 +19,8 @@ import random
 import time
 from pygame import mixer
 
-
+#cambiar a 1 si es camara externa
 cam = cv2.VideoCapture(0)
-#print 'horizontal =', cam.get(3), 'vertical =', cam.get(4)
 
 # Estructura para mantener una lista de ubicaciones
 # nos permitirá dibujar el "contrail" de la pelota como su seguimiento
@@ -31,6 +38,7 @@ def invertirImagen(img):
 #Funcion para convertir imagen a HSV
 def convertirHSV(img):
     return cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
+
 def img(img1,img2,xpos,ypos):
     rows2,cols2,channels2 = img2.shape
     rows1,cols1,channels1 = img1.shape
@@ -47,7 +55,7 @@ def transformacionesMorfologicas(mascara):
     mascaraR1 = cv2.dilate(mascaraR, kernel, iterations=2)
     return mascaraR1
 
-#funcion que dibuja los rectangulos en las esquinas de la pantalla
+#funcion que dibuja los rectangulos
 def dibujarRectangulos(img):
     # Verde
     cv2.rectangle(img, (190, 100), (300, 200), (196, 230, 0), 3)
@@ -58,10 +66,12 @@ def dibujarRectangulos(img):
     # Amarillo
     cv2.rectangle(img, (320, 380), (200, 280), (196, 230, 0), 3)
 
-#Funcion para encontrar el rango hsv del color azul
+#Funcion para encontrar el rango hsv del color azul rango de colores
 def buscarAzul(hsv):
     #azulMin = np.array([49, 50, 50], np.uint8)
     #azulMax = np.array([100, 255, 210], np.uint8)
+    #azulMin = np.array([0, 0, 0], np.uint8) #amarillo
+    #azulMax = np.array([0, 247, 255], np.uint8)#amarillo
     azulMin = np.array([105, 100, 100], np.uint8)
     azulMax = np.array([130, 255, 255], np.uint8)
     azul = cv2.inRange(hsv, azulMin, azulMax)
@@ -80,10 +90,10 @@ def seleccionarRespuesta_a(img, azulM):
         center = (int(M["m10"] / M["m00"]), int(M["m01"] / M["m00"]))
 
         if radius > 10:
-            cv2.circle(img, (int(x), int(y)), int(radius), (0, 0, 0), 2)
+            cv2.circle(img, (int(x), int(y)), int(radius), (196, 230, 0), 2)
             cv2.circle(img, center, 5, (255, 255, 255), -1)
-            cv2.putText(img, "AZUL", (int(x - radius), int(y - (radius + 10))), cv2.FONT_HERSHEY_SIMPLEX, 1,
-                        (255, 0, 0), 2)
+            #cv2.putText(img, "AZUL", (int(x - radius), int(y - (radius + 10))), cv2.FONT_HERSHEY_SIMPLEX, 1,
+            #            (255, 0, 0), 2)
             if x < 300 and y < 200:
 
                 numero = 1
@@ -98,10 +108,11 @@ def seleccionarRespuesta_a(img, azulM):
                 numero = 4
 
     return numero
+#rectangulo del inicio
 def dibujarEmpezar(img):
     # Verde
     cv2.rectangle(img, (200, 130), (470, 300), (196, 230, 0), 3)
-
+#funcion para seleccionar iniciar el juego
 def seleccionarempezar(img, azulM):
     (contours, hierarchy) = cv2.findContours(azulM, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
     center = None
@@ -113,10 +124,10 @@ def seleccionarempezar(img, azulM):
         center = (int(M["m10"] / M["m00"]), int(M["m01"] / M["m00"]))
 
         if radius > 10:
-            cv2.circle(img, (int(x), int(y)), int(radius), (0, 0, 0), 2)
+            cv2.circle(img, (int(x), int(y)), int(radius), (196, 230, 0), 2)
             cv2.circle(img, center, 5, (255, 255, 255), -1)
-            cv2.putText(img, "AZUL", (int(x - radius), int(y - (radius + 10))), cv2.FONT_HERSHEY_SIMPLEX, 1,
-                        (255, 0, 0), 2)
+            #cv2.putText(img, "AZUL", (int(x - radius), int(y - (radius + 10))), cv2.FONT_HERSHEY_SIMPLEX, 1,
+                    #    (255, 0, 0), 2)
             if x < 470 and y < 300:
                 emp = 8
 
@@ -146,9 +157,11 @@ pres_n4 = lista[3]
 ress= 0
 cap=0
 mtap=0
+#cargar la musica
 mixer.init()
 mixer.music.load('/home/edison/Escritorio/Tracking_objects_3-master/Code/cetus.mp3')
 mixer.music.play()
+#fin de carga de musica
 start_time = time.time()
 valorpuntuacion = 0
 contador_multiplicaciones = 0
